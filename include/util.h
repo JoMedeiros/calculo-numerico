@@ -16,7 +16,7 @@ struct Polynomial {
   int operator()(int x) {
     int e = coefs.size()-1;
     int res = 0;
-    for (int i=0; i < coefs.size(); ++i) {
+    for (size_t i=0; i < coefs.size(); ++i) {
       res += coefs[i]*pow(x, e);
       --e;
     }
@@ -25,21 +25,21 @@ struct Polynomial {
 };
 std::ostream & operator << (std::ostream &os, const Polynomial &p) {
   int e = p.coefs.size()-1;
-  if (p.coefs.front() != 1) os << p.coefs.front() << '*';
-  os << "x^"<< e--;
-  for ( int i = 1; i < p.coefs.size() - 1; ++i ) {
+  if (p.coefs.front() < 0) os << '-';
+  //os << "x**"<< e--;
+  for ( size_t i = 0; i < p.coefs.size() - 1; ++i ) {
     if (p.coefs[i] != 0) {
-      string sign = p.coefs[i] < 0 ? " - " : " + ";
-      os << sign;
       if ( abs(p.coefs[i]) != 1 ) os << abs(p.coefs[i]) << '*';
-      if ( e != 1 ) os  << "x^" << e;
+      if ( e != 1 ) os  << "x**" << e;
       else os << "x"; 
       --e;
+      string sign = p.coefs[i+1] < 0 ? " - " : " + ";
+      os << sign;
     }
   }
   if (p.coefs.back() != 0) {
-    string sign = p.coefs.back() < 0 ? " - " : " + ";
-    os << sign << abs(p.coefs.back());
+    //string sign = p.coefs.back() < 0 ? " - " : " + ";
+    os << abs(p.coefs.back());
   }
   return os;
 }
@@ -58,4 +58,9 @@ Polynomial derive( Polynomial f ) {
 }
 
 Polynomial tan_line( Polynomial f, Point pt ) {
+  Polynomial dydx = derive(f);
+  int m = dydx(pt.x);
+  int b = m*(-pt.x) + pt.y;
+  return Polynomial{m,b};
 }
+
