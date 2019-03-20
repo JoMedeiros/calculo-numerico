@@ -13,7 +13,7 @@ TEST_DIR=./test
 
 .PHONY: all clean distclean doxy
 
-all: dir ls1ex1 ls1ex2 ls1ex3
+all: dir ls1ex1 ls1ex2 ls1ex3 ls2ex1
 
 #### Lista 1 - Exercício 1 ####
 ls1ex1: $(OBJ_DIR)/ls1ex1.o
@@ -42,6 +42,16 @@ ls1ex3: $(OBJ_DIR)/ls1ex3.o
 	@echo "+++ [Executavel $@ criado em $(BIN_DIR)] +++"
 	@echo "============="
 	
+#### Lista 2 - Exercício 1 ####
+ls2ex1: $(OBJ_DIR)/ls2ex1.o
+	@echo "============="
+	@echo "Ligando o alvo $@"
+	@echo "============="
+	$(CC) $(CPPFLAGS) -o $(BIN_DIR)/$@ $^ -I$(INC_DIR)
+	@echo "+++ [Executavel $@ criado em $(BIN_DIR)] +++"
+	@echo "============="
+
+
 # Cria os diretórios necessários
 dir:
 	mkdir -p bin build
@@ -59,6 +69,9 @@ $(OBJ_DIR)/ls1ex2.o: $(SRC_DIR)/ls1ex2.cpp
 	$(CC) -c $(CPPFLAGS) -o $@ $< -I$(INC_DIR)
 # l1ex3
 $(OBJ_DIR)/ls1ex3.o: $(SRC_DIR)/ls1ex3.cpp
+	$(CC) -c $(CPPFLAGS) -o $@ $< -I$(INC_DIR)
+# l2ex1
+$(OBJ_DIR)/ls2ex1.o: $(SRC_DIR)/ls2ex1.cpp
 	$(CC) -c $(CPPFLAGS) -o $@ $< -I$(INC_DIR)
 	
 # Alvo (target) para a geração automatica de documentacao usando o Doxygen.

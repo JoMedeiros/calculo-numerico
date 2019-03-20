@@ -1,6 +1,6 @@
 /**
  * @author Josivan Medeiros da Silva Gois
- * @brief Lista 1 - Questão 2 Unidade 1 Cálculo Numérico
+ * @brief Lista 1 - Questão 3 Unidade 1 Cálculo Numérico
  */
 #include <iostream>
 #include <fstream>
