@@ -5,26 +5,32 @@
 using namespace std;
 
 struct Point {
-  int x, y;
-  Point(int _x, int _y) : x(_x), y(_y) {};
+  double x, y;
+  Point(double _x, double _y) : x(_x), y(_y) {};
 };
 struct Polynomial {
-  std::vector<int> coefs;
-  Polynomial(std::initializer_list<int> l){
+  std::vector<double> coefs;
+  Polynomial(std::initializer_list<double> l){
     coefs.insert(coefs.end(), l.begin(), l.end());
   }
-  int operator()(int x) {
-    int e = coefs.size()-1;
-    int res = 0;
+  double operator()(double x) {
+    double e = coefs.size()-1;
+    double res = 0;
     for (size_t i=0; i < coefs.size(); ++i) {
       res += coefs[i]*pow(x, e);
       --e;
     }
     return res;
   }
+  double& operator [](double idx) {
+    return coefs[idx];
+  }
+  double operator [](double idx) const {
+    return coefs[idx];
+  }
 };
 std::ostream & operator << (std::ostream &os, const Polynomial &p) {
-  int e = p.coefs.size()-1;
+  double e = p.coefs.size()-1;
   if (p.coefs.front() < 0) os << '-';
   //os << "x**"<< e--;
   for ( size_t i = 0; i < p.coefs.size() - 1; ++i ) {
@@ -49,8 +55,8 @@ std::ostream & operator << (std::ostream &os, const Polynomial &p) {
  */
 Polynomial derive( Polynomial f ) {
   f.coefs.pop_back();
-  int e = f.coefs.size();
-  for (int i = 0; i < e; ++i) {
+  double e = f.coefs.size();
+  for (double i = 0; i < e; ++i) {
     f.coefs[i] *= e;
     --e;
   }
@@ -59,8 +65,8 @@ Polynomial derive( Polynomial f ) {
 
 Polynomial tan_line( Polynomial f, Point pt ) {
   Polynomial dydx = derive(f);
-  int m = dydx(pt.x);
-  int b = m*(-pt.x) + pt.y;
+  double m = dydx(pt.x);
+  double b = m*(-pt.x) + pt.y;
   return Polynomial{m,b};
 }
 

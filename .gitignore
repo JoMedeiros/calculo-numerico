@@ -3,6 +3,8 @@ material/
 
 # Build files
 build/
+# debbug file
+gmon.out
 
 # VIm files
 *~
